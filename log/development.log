@@ -188,3 +188,190 @@ FOREIGN KEY ("todo_id")
   [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "schema_sha1"], ["value", "b41fd1557836e9e6493d213308d3836b8c12f9cb"], ["created_at", "2022-02-23 18:41:41.707545"], ["updated_at", "2022-02-23 18:41:41.707545"]]
   [1m[36mTRANSACTION (39.3ms)[0m  [1m[35mCOMMIT[0m
   [1m[36mActiveRecord::SchemaMigration Pluck (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (26.3ms)[0m  [1m[35mCREATE DATABASE "todos_api_development" ENCODING = 'unicode'[0m
+  [1m[35m (20.2ms)[0m  [1m[35mCREATE DATABASE "todos_api_development" ENCODING = 'unicode'[0m
+  [1m[35m (18.8ms)[0m  [1m[35mCREATE DATABASE "todos_api_development" ENCODING = 'unicode'[0m
+  [1m[35m (24.3ms)[0m  [1m[35mCREATE DATABASE "todos_api_development" ENCODING = 'unicode'[0m
+  [1m[35m (22.1ms)[0m  [1m[35mCREATE DATABASE "todos_api_development" ENCODING = 'unicode'[0m
+  [1m[35m (919.1ms)[0m  [1m[35mCREATE DATABASE "todos_api_development" ENCODING = 'unicode'[0m
+  [1m[35m (760.8ms)[0m  [1m[35mCREATE DATABASE "todos_api_test" ENCODING = 'unicode'[0m
+  [1m[35m (5.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "items" CASCADE[0m
+  [1m[35m (44.1ms)[0m  [1m[35mCREATE TABLE "items" ("id" bigserial primary key, "name" character varying, "done" boolean, "todo_id" integer NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE INDEX "index_items_on_todo_id" ON "items" ("todo_id")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "todos" CASCADE[0m
+  [1m[35m (13.7ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "title" character varying, "created_by" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (12.5ms)[0m  [1m[35mALTER TABLE "items" ADD CONSTRAINT "fk_rails_c01e6b449d"
+FOREIGN KEY ("todo_id")
+  REFERENCES "todos" ("id")
+[0m
+  [1m[35m (8.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (3.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (3.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20220223152050)[0m
+  [1m[35m (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20220223152017);
+
+[0m
+  [1m[35m (10.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (2.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2022-02-23 20:12:38.232547"], ["updated_at", "2022-02-23 20:12:38.232547"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "schema_sha1"], ["value", "b41fd1557836e9e6493d213308d3836b8c12f9cb"], ["created_at", "2022-02-23 20:12:38.256027"], ["updated_at", "2022-02-23 20:12:38.256027"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "items" CASCADE[0m
+  [1m[35m (28.8ms)[0m  [1m[35mCREATE TABLE "items" ("id" bigserial primary key, "name" character varying, "done" boolean, "todo_id" integer NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE INDEX "index_items_on_todo_id" ON "items" ("todo_id")[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "todos" CASCADE[0m
+  [1m[35m (13.0ms)[0m  [1m[35mCREATE TABLE "todos" ("id" bigserial primary key, "title" character varying, "created_by" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (7.5ms)[0m  [1m[35mALTER TABLE "items" ADD CONSTRAINT "fk_rails_c01e6b449d"
+FOREIGN KEY ("todo_id")
+  REFERENCES "todos" ("id")
+[0m
+  [1m[35m (12.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20220223152050)[0m
+  [1m[35m (3.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20220223152017);
+
+[0m
+  [1m[35m (10.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (1.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2022-02-23 20:12:38.537016"], ["updated_at", "2022-02-23 20:12:38.537016"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Update (0.7ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "test"], ["updated_at", "2022-02-23 20:12:38.554980"], ["key", "environment"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (4.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "schema_sha1"], ["value", "b41fd1557836e9e6493d213308d3836b8c12f9cb"], ["created_at", "2022-02-23 20:12:38.573725"], ["updated_at", "2022-02-23 20:12:38.573725"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for ::1 at 2022-02-23 22:13:19 +0200
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/eleni/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/railties-7.0.2.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/eleni/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/railties-7.0.2.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 13.5ms | Allocations: 727)
+Completed 200 OK in 252ms (Views: 149.5ms | ActiveRecord: 0.0ms | Allocations: 6219)
+
+
+Started GET "/todos" for ::1 at 2022-02-23 22:13:24 +0200
+Processing by TodosController#index as HTML
+  [1m[36mTodo Load (4.8ms)[0m  [1m[34mSELECT "todos".* FROM "todos"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 53ms (Views: 6.3ms | ActiveRecord: 4.8ms | Allocations: 3858)
+
+
+Started GET "/" for ::1 at 2022-02-23 22:13:30 +0200
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/eleni/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/railties-7.0.2.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/eleni/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/railties-7.0.2.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 3.3ms | Allocations: 412)
+Completed 200 OK in 17ms (Views: 14.1ms | ActiveRecord: 0.0ms | Allocations: 1396)
+
+
+Started GET "/" for ::1 at 2022-02-23 22:33:43 +0200
+Processing by Rails::WelcomeController#index as */*
+  Rendering /home/eleni/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/railties-7.0.2.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/eleni/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/railties-7.0.2.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.3ms | Allocations: 23)
+Completed 200 OK in 10ms (Views: 7.8ms | Allocations: 384)
+
+
+Started POST "/todos%20title=Mozart%20created_by=1" for ::1 at 2022-02-23 22:34:26 +0200
+  
+ActionController::RoutingError (No route matches [POST] "/todos%20title=Mozart%20created_by=1"):
+  
+[ActionDispatch::HostAuthorization::DefaultResponseApp] Blocked host: 
+[ActionDispatch::HostAuthorization::DefaultResponseApp] Blocked host: 
+[ActionDispatch::HostAuthorization::DefaultResponseApp] Blocked host: 
+Started GET "/todos" for ::1 at 2022-02-23 22:37:39 +0200
+Processing by TodosController#index as */*
+  [1m[36mTodo Load (2.4ms)[0m  [1m[34mSELECT "todos".* FROM "todos"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 167ms (Views: 166.5ms | ActiveRecord: 36.6ms | Allocations: 3128)
+
+
+Started POST "/todos%20title=Mozart%20created_by=1" for ::1 at 2022-02-23 22:38:07 +0200
+  
+ActionController::RoutingError (No route matches [POST] "/todos%20title=Mozart%20created_by=1"):
+  
+Started POST "/todos%20title=Mozart%20created_by=1" for ::1 at 2022-02-23 22:38:56 +0200
+  
+ActionController::RoutingError (No route matches [POST] "/todos%20title=Mozart%20created_by=1"):
+  
+Started GET "/todos" for ::1 at 2022-02-23 22:48:28 +0200
+  [1m[36mActiveRecord::SchemaMigration Pluck (2.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TodosController#index as HTML
+  [1m[36mTodo Load (2.3ms)[0m  [1m[34mSELECT "todos".* FROM "todos"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 183ms (Views: 10.9ms | ActiveRecord: 2.3ms | Allocations: 16706)
+
+
+Started GET "/todos" for 127.0.0.1 at 2022-02-23 22:48:41 +0200
+Processing by TodosController#index as */*
+  [1m[36mTodo Load (1.7ms)[0m  [1m[34mSELECT "todos".* FROM "todos"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 7ms (Views: 4.6ms | ActiveRecord: 1.7ms | Allocations: 675)
+
+
+Started POST "/todos" for 127.0.0.1 at 2022-02-23 22:49:03 +0200
+Processing by TodosController#create as HTML
+  Parameters: {"title"=>"Mozart", "created_by"=>"1", "todo"=>{"title"=>"Mozart", "created_by"=>"1"}}
+[31mUnpermitted parameter: :todo. Context: { controller: TodosController, action: create, request: #<ActionDispatch::Request:0x00007fffc7aae500>, params: {"title"=>"Mozart", "created_by"=>"1", "controller"=>"todos", "action"=>"create", "todo"=>{"title"=>"Mozart", "created_by"=>"1"}} }[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/todos_controller.rb:12:in `create'
+  [1m[36mTodo Create (5.0ms)[0m  [1m[32mINSERT INTO "todos" ("title", "created_by", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Mozart"], ["created_by", "1"], ["created_at", "2022-02-23 20:49:03.364016"], ["updated_at", "2022-02-23 20:49:03.364016"]]
+  ↳ app/controllers/todos_controller.rb:12:in `create'
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/todos_controller.rb:12:in `create'
+Completed 201 Created in 66ms (Views: 1.0ms | ActiveRecord: 26.8ms | Allocations: 7940)
+
+
+Started PUT "/todos/1" for 127.0.0.1 at 2022-02-23 22:50:17 +0200
+Processing by TodosController#update as HTML
+  Parameters: {"title"=>"Beethoven", "id"=>"1", "todo"=>{"title"=>"Beethoven"}}
+  [1m[36mTodo Load (0.5ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/todos_controller.rb:41:in `set_todo'
+[31mUnpermitted parameters: :id, :todo. Context: { controller: TodosController, action: update, request: #<ActionDispatch::Request:0x00007ff1b021ece8>, params: {"title"=>"Beethoven", "controller"=>"todos", "action"=>"update", "id"=>"1", "todo"=>{"title"=>"Beethoven"}} }[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/todos_controller.rb:23:in `update'
+  [1m[36mTodo Update (2.8ms)[0m  [1m[33mUPDATE "todos" SET "title" = $1, "updated_at" = $2 WHERE "todos"."id" = $3[0m  [["title", "Beethoven"], ["updated_at", "2022-02-23 20:50:17.213955"], ["id", 1]]
+  ↳ app/controllers/todos_controller.rb:23:in `update'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/todos_controller.rb:23:in `update'
+Completed 204 No Content in 46ms (ActiveRecord: 4.6ms | Allocations: 5022)
+
+
+Started GET "/todos" for 127.0.0.1 at 2022-02-23 22:51:10 +0200
+Processing by TodosController#index as */*
+  [1m[36mTodo Load (0.7ms)[0m  [1m[34mSELECT "todos".* FROM "todos"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 6ms (Views: 4.8ms | ActiveRecord: 0.7ms | Allocations: 811)
+
+
+Started DELETE "/todos/1" for 127.0.0.1 at 2022-02-23 22:51:46 +0200
+Processing by TodosController#destroy as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mTodo Load (0.5ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/todos_controller.rb:41:in `set_todo'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/todos_controller.rb:29:in `destroy'
+  [1m[36mItem Load (1.1ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = $1[0m  [["todo_id", 1]]
+  ↳ app/controllers/todos_controller.rb:29:in `destroy'
+  [1m[36mTodo Destroy (3.1ms)[0m  [1m[31mDELETE FROM "todos" WHERE "todos"."id" = $1[0m  [["id", 1]]
+  ↳ app/controllers/todos_controller.rb:29:in `destroy'
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/todos_controller.rb:29:in `destroy'
+Completed 204 No Content in 71ms (ActiveRecord: 8.0ms | Allocations: 10807)
+
+
+Started GET "/todos" for 127.0.0.1 at 2022-02-23 22:52:09 +0200
+Processing by TodosController#index as */*
+  [1m[36mTodo Load (0.5ms)[0m  [1m[34mSELECT "todos".* FROM "todos"[0m
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+Completed 200 OK in 5ms (Views: 4.3ms | ActiveRecord: 0.5ms | Allocations: 686)
+
+
