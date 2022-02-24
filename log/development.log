@@ -802,3 +802,54 @@ Processing by TodosController#index as */*
 Completed 200 OK in 8ms (Views: 2.9ms | ActiveRecord: 1.2ms | Allocations: 1504)
 
 
+Started GET "/todos" for ::1 at 2022-02-24 12:11:30 +0200
+  [1m[36mActiveRecord::SchemaMigration Pluck (2.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by TodosController#index as HTML
+Completed 422 Unprocessable Entity in 8ms (Views: 0.5ms | ActiveRecord: 0.0ms | Allocations: 899)
+
+
+Started GET "/favicon.ico" for ::1 at 2022-02-24 12:11:31 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/todos/1" for ::1 at 2022-02-24 12:11:37 +0200
+Processing by TodosController#show as HTML
+  Parameters: {"id"=>"1"}
+Completed 422 Unprocessable Entity in 1ms (Views: 0.8ms | ActiveRecord: 0.0ms | Allocations: 139)
+
+
+Started GET "/todos" for ::1 at 2022-02-24 12:11:41 +0200
+Processing by TodosController#index as HTML
+Completed 422 Unprocessable Entity in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms | Allocations: 86)
+
+
+Started GET "/" for ::1 at 2022-02-24 12:11:42 +0200
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/eleni/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/railties-7.0.2.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/eleni/.rbenv/versions/3.0.2/lib/ruby/gems/3.0.0/gems/railties-7.0.2.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 6.4ms | Allocations: 414)
+Completed 200 OK in 61ms (Views: 15.7ms | ActiveRecord: 0.0ms | Allocations: 3887)
+
+
+Started GET "/sing_in" for ::1 at 2022-02-24 12:11:53 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/sing_in"):
+  
+Started GET "/auth" for ::1 at 2022-02-24 12:12:19 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/auth"):
+  
+Started GET "/todos/auth" for ::1 at 2022-02-24 12:12:34 +0200
+Processing by TodosController#show as HTML
+  Parameters: {"id"=>"auth"}
+Completed 422 Unprocessable Entity in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms | Allocations: 122)
+
+
+Started GET "/auth/login" for ::1 at 2022-02-24 12:13:19 +0200
+  
+ActionController::RoutingError (No route matches [GET] "/auth/login"):
+  
+Started GET "/todos" for ::1 at 2022-02-24 12:13:38 +0200
+Processing by TodosController#index as HTML
+Completed 422 Unprocessable Entity in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 85)
+
+
