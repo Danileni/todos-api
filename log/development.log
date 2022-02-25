@@ -922,3 +922,135 @@ Processing by V2::TodosController#index as */*
 Completed 200 OK in 5ms (Views: 0.3ms | ActiveRecord: 0.5ms | Allocations: 843)
 
 
+Started POST "/todos/1/items" for 127.0.0.1 at 2022-02-25 16:54:47 +0200
+  [1m[36mActiveRecord::SchemaMigration Pluck (3.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by V1::ItemsController#create as */*
+  Parameters: {"name"=>"Listen to Don Giovanni", "todo_id"=>"1", "item"=>{"name"=>"Listen to Don Giovanni"}}
+  [1m[36mUser Load (5.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/auth/authorize_api_request.rb:20:in `user'
+  [1m[36mTodo Load (2.8ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/v1/items_controller.rb:41:in `set_todo'
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.54ms)
+Completed 404 Not Found in 233ms (Views: 16.2ms | ActiveRecord: 36.1ms | Allocations: 12572)
+
+
+Started POST "/todos/2/items" for 127.0.0.1 at 2022-02-25 16:55:08 +0200
+Processing by V1::ItemsController#create as */*
+  Parameters: {"name"=>"Listen to Don Giovanni", "todo_id"=>"2", "item"=>{"name"=>"Listen to Don Giovanni"}}
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/auth/authorize_api_request.rb:20:in `user'
+  [1m[36mTodo Load (0.7ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/v1/items_controller.rb:41:in `set_todo'
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.2ms)
+Completed 404 Not Found in 13ms (Views: 1.8ms | ActiveRecord: 1.4ms | Allocations: 1444)
+
+
+Started POST "/todos/3/items" for 127.0.0.1 at 2022-02-25 16:55:21 +0200
+Processing by V1::ItemsController#create as */*
+  Parameters: {"name"=>"Listen to Don Giovanni", "todo_id"=>"3", "item"=>{"name"=>"Listen to Don Giovanni"}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/auth/authorize_api_request.rb:20:in `user'
+  [1m[36mTodo Load (0.5ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/v1/items_controller.rb:41:in `set_todo'
+[31mUnpermitted parameters: :todo_id, :item. Context: { controller: V1::ItemsController, action: create, request: #<ActionDispatch::Request:0x00007fc5b04d8ca8>, params: {"name"=>"Listen to Don Giovanni", "controller"=>"v1/items", "action"=>"create", "todo_id"=>"3", "item"=>{"name"=>"Listen to Don Giovanni"}} }[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/v1/items_controller.rb:18:in `create'
+  [1m[36mItem Create (6.7ms)[0m  [1m[32mINSERT INTO "items" ("name", "done", "todo_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Listen to Don Giovanni"], ["done", nil], ["todo_id", 3], ["created_at", "2022-02-25 14:55:21.674808"], ["updated_at", "2022-02-25 14:55:21.674808"]]
+  ↳ app/controllers/v1/items_controller.rb:18:in `create'
+  [1m[36mTRANSACTION (3.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/v1/items_controller.rb:18:in `create'
+[active_model_serializers]   [1m[36mItem Load (1.2ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = $1[0m  [["todo_id", 3]]
+[active_model_serializers]   ↳ app/controllers/concerns/response.rb:3:in `json_response'
+[active_model_serializers] No serializer found for resource: #<Item id: 2, name: "Listen to Don Giovanni", done: nil, todo_id: 3, created_at: "2022-02-25 14:55:21.674808000 +0000", updated_at: "2022-02-25 14:55:21.674808000 +0000">
+[active_model_serializers] Rendered TodoSerializer with ActiveModelSerializers::Adapter::Attributes (25.75ms)
+Completed 201 Created in 270ms (Views: 120.0ms | ActiveRecord: 17.4ms | Allocations: 36222)
+
+
+Started POST "/todos/4/items" for 127.0.0.1 at 2022-02-25 16:56:30 +0200
+Processing by V1::ItemsController#create as */*
+  Parameters: {"name"=>"Listen to Don Giovanni", "todo_id"=>"4", "item"=>{"name"=>"Listen to Don Giovanni"}}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/auth/authorize_api_request.rb:20:in `user'
+  [1m[36mTodo Load (1.3ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/v1/items_controller.rb:41:in `set_todo'
+[31mUnpermitted parameters: :todo_id, :item. Context: { controller: V1::ItemsController, action: create, request: #<ActionDispatch::Request:0x00007fc5b0c8d778>, params: {"name"=>"Listen to Don Giovanni", "controller"=>"v1/items", "action"=>"create", "todo_id"=>"4", "item"=>{"name"=>"Listen to Don Giovanni"}} }[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/v1/items_controller.rb:18:in `create'
+  [1m[36mItem Create (1.4ms)[0m  [1m[32mINSERT INTO "items" ("name", "done", "todo_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Listen to Don Giovanni"], ["done", nil], ["todo_id", 4], ["created_at", "2022-02-25 14:56:30.416082"], ["updated_at", "2022-02-25 14:56:30.416082"]]
+  ↳ app/controllers/v1/items_controller.rb:18:in `create'
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/v1/items_controller.rb:18:in `create'
+[active_model_serializers]   [1m[36mItem Load (2.2ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = $1[0m  [["todo_id", 4]]
+[active_model_serializers]   ↳ app/controllers/concerns/response.rb:3:in `json_response'
+[active_model_serializers] No serializer found for resource: #<Item id: 3, name: "Listen to Don Giovanni", done: nil, todo_id: 4, created_at: "2022-02-25 14:56:30.416082000 +0000", updated_at: "2022-02-25 14:56:30.416082000 +0000">
+[active_model_serializers] Rendered TodoSerializer with ActiveModelSerializers::Adapter::Attributes (17.97ms)
+Completed 201 Created in 62ms (Views: 18.6ms | ActiveRecord: 8.9ms | Allocations: 4710)
+
+
+Started GET "/todos" for 127.0.0.1 at 2022-02-25 16:59:29 +0200
+Processing by V1::TodosController#index as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/auth/authorize_api_request.rb:20:in `user'
+  [1m[36mTodo Load (0.5ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."created_by" = $1[0m  [["created_by", "1"]]
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+[active_model_serializers]   [1m[36mItem Load (0.6ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = $1[0m  [["todo_id", 3]]
+[active_model_serializers]   ↳ app/controllers/concerns/response.rb:3:in `json_response'
+[active_model_serializers] No serializer found for resource: #<Item id: 2, name: "Listen to Don Giovanni", done: nil, todo_id: 3, created_at: "2022-02-25 14:55:21.674808000 +0000", updated_at: "2022-02-25 14:55:21.674808000 +0000">
+[active_model_serializers]   [1m[36mItem Load (0.5ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = $1[0m  [["todo_id", 4]]
+[active_model_serializers]   ↳ app/controllers/concerns/response.rb:3:in `json_response'
+[active_model_serializers] No serializer found for resource: #<Item id: 3, name: "Listen to Don Giovanni", done: nil, todo_id: 4, created_at: "2022-02-25 14:56:30.416082000 +0000", updated_at: "2022-02-25 14:56:30.416082000 +0000">
+[active_model_serializers] No serializer found for resource: #<Item id: 2, name: "Listen to Don Giovanni", done: nil, todo_id: 3, created_at: "2022-02-25 14:55:21.674808000 +0000", updated_at: "2022-02-25 14:55:21.674808000 +0000">
+[active_model_serializers] No serializer found for resource: #<Item id: 3, name: "Listen to Don Giovanni", done: nil, todo_id: 4, created_at: "2022-02-25 14:56:30.416082000 +0000", updated_at: "2022-02-25 14:56:30.416082000 +0000">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (16.64ms)
+Completed 200 OK in 28ms (Views: 22.1ms | ActiveRecord: 2.1ms | Allocations: 5008)
+
+
+Started GET "/todos" for 127.0.0.1 at 2022-02-25 17:07:15 +0200
+  [1m[36mActiveRecord::SchemaMigration Pluck (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by V1::TodosController#index as */*
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/auth/authorize_api_request.rb:20:in `user'
+  [1m[36mTodo Load (1.3ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."created_by" = $1 LIMIT $2 OFFSET $3[0m  [["created_by", "1"], ["LIMIT", 20], ["OFFSET", 0]]
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+[active_model_serializers]   [1m[36mItem Load (1.2ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = $1[0m  [["todo_id", 3]]
+[active_model_serializers]   ↳ app/controllers/concerns/response.rb:3:in `json_response'
+[active_model_serializers] No serializer found for resource: #<Item id: 2, name: "Listen to Don Giovanni", done: nil, todo_id: 3, created_at: "2022-02-25 14:55:21.674808000 +0000", updated_at: "2022-02-25 14:55:21.674808000 +0000">
+[active_model_serializers]   [1m[36mItem Load (1.4ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = $1[0m  [["todo_id", 4]]
+[active_model_serializers]   ↳ app/controllers/concerns/response.rb:3:in `json_response'
+[active_model_serializers] No serializer found for resource: #<Item id: 3, name: "Listen to Don Giovanni", done: nil, todo_id: 4, created_at: "2022-02-25 14:56:30.416082000 +0000", updated_at: "2022-02-25 14:56:30.416082000 +0000">
+[active_model_serializers] No serializer found for resource: #<Item id: 2, name: "Listen to Don Giovanni", done: nil, todo_id: 3, created_at: "2022-02-25 14:55:21.674808000 +0000", updated_at: "2022-02-25 14:55:21.674808000 +0000">
+[active_model_serializers] No serializer found for resource: #<Item id: 3, name: "Listen to Don Giovanni", done: nil, todo_id: 4, created_at: "2022-02-25 14:56:30.416082000 +0000", updated_at: "2022-02-25 14:56:30.416082000 +0000">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (66.15ms)
+Completed 200 OK in 326ms (Views: 132.9ms | ActiveRecord: 27.9ms | Allocations: 48217)
+
+
+Started GET "/todos?page=1" for 127.0.0.1 at 2022-02-25 17:08:16 +0200
+Processing by V1::TodosController#index as */*
+  Parameters: {"page"=>"1"}
+  [1m[36mUser Load (3.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/auth/authorize_api_request.rb:20:in `user'
+  [1m[36mTodo Load (1.0ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."created_by" = $1 LIMIT $2 OFFSET $3[0m  [["created_by", "1"], ["LIMIT", 20], ["OFFSET", 0]]
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+[active_model_serializers]   [1m[36mItem Load (0.8ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = $1[0m  [["todo_id", 3]]
+[active_model_serializers]   ↳ app/controllers/concerns/response.rb:3:in `json_response'
+[active_model_serializers] No serializer found for resource: #<Item id: 2, name: "Listen to Don Giovanni", done: nil, todo_id: 3, created_at: "2022-02-25 14:55:21.674808000 +0000", updated_at: "2022-02-25 14:55:21.674808000 +0000">
+[active_model_serializers]   [1m[36mItem Load (0.6ms)[0m  [1m[34mSELECT "items".* FROM "items" WHERE "items"."todo_id" = $1[0m  [["todo_id", 4]]
+[active_model_serializers]   ↳ app/controllers/concerns/response.rb:3:in `json_response'
+[active_model_serializers] No serializer found for resource: #<Item id: 3, name: "Listen to Don Giovanni", done: nil, todo_id: 4, created_at: "2022-02-25 14:56:30.416082000 +0000", updated_at: "2022-02-25 14:56:30.416082000 +0000">
+[active_model_serializers] No serializer found for resource: #<Item id: 2, name: "Listen to Don Giovanni", done: nil, todo_id: 3, created_at: "2022-02-25 14:55:21.674808000 +0000", updated_at: "2022-02-25 14:55:21.674808000 +0000">
+[active_model_serializers] No serializer found for resource: #<Item id: 3, name: "Listen to Don Giovanni", done: nil, todo_id: 4, created_at: "2022-02-25 14:56:30.416082000 +0000", updated_at: "2022-02-25 14:56:30.416082000 +0000">
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (26.3ms)
+Completed 200 OK in 57ms (Views: 40.9ms | ActiveRecord: 5.5ms | Allocations: 4541)
+
+
+Started GET "/todos?page=2" for 127.0.0.1 at 2022-02-25 17:09:12 +0200
+Processing by V1::TodosController#index as */*
+  Parameters: {"page"=>"2"}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/auth/authorize_api_request.rb:20:in `user'
+  [1m[36mTodo Load (0.5ms)[0m  [1m[34mSELECT "todos".* FROM "todos" WHERE "todos"."created_by" = $1 LIMIT $2 OFFSET $3[0m  [["created_by", "1"], ["LIMIT", 20], ["OFFSET", 20]]
+  ↳ app/controllers/concerns/response.rb:3:in `json_response'
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (0.14ms)
+Completed 200 OK in 14ms (Views: 9.0ms | ActiveRecord: 1.0ms | Allocations: 1638)
+
+
