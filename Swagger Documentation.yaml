@@ -1,0 +1,326 @@
+openapi : "3.0.0"
+servers:
+  - url: https://list-of-todo-items-api.herokuapp.com/ 
+    description: Production server 
+info :
+      title: "Ruby on Rails API"
+      version : "1.0.0"
+      description : " Το συγκεκριμένο API δημιουργήθηκε στα πλαίσια του μαθηματος Υπερσιοστρεφές λογισμικό (Software as a Service) 
+        <br /><br />
+      
+        Ομαδα :<br/><br/>
+        
+          Ελένη Πολυκράτη Π18212 <br/><br/>
+          
+          Νικολαος Μυττάς Π18114 <br />
+      
+          
+          Σχετικα με την Εργασία:
+          
+          Για την υλοποιήση του συγκεκριμένου RESTful API χρησιμοποιήθηκεωσ framework η Rails (v7.0.2.2). Για βάση δεδομένων η PostgreSQL (v14.1). Για το Test Driven Development αξιοποιειται το Rspec , ένα Unit Test Framework της γλώσσας Ruby. Ο κώδικας για την εφαρμογή υπάρχει στο Github στο εξης Repository κ :<br/><br/>
+          
+          [https://github.com/Danileni/todos-api](https://github.com/Danileni/todos-api)
+          
+          <br/><br/>
+          
+          Το deployment έχει γίνει στο Heroku :
+          
+          <br/><br/>
+          
+          [https://list-of-todo-items-api.herokuapp.com/](https://list-of-todo-items-api.herokuapp.com/)
+      "
+      
+paths :
+  /signup:
+    post:
+      tags:
+        - Users
+      summary: Εγγραφή νέου χρήστη
+      description: >-
+        Για την διαχείρηση των κωδικών του χρήστη χρησιμοποιήθηκε το gem bcrypt
+        και το has_secure_password στο μοντέλο του χρήστη.
+      parameters:
+        - in: query
+          name: email
+          schema:
+            type: string
+          required: true
+          example: test@gmail.com
+        - in: query
+          name: password
+          required: true
+          example: 123456
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Created, όταν ο χρήστης εγγράφεται επιτυχώς
+          
+        '400':
+          description: >-
+            Bad Request, όταν δεν έχουν συμπληρωθεί σωστά τα πεδία email και
+            password
+          
+        '422':
+          description: >-
+            Unprocessable Entity, όταν αντιμετοπίζεται κάποιο σφάλμα στα πεδία
+            email και password (π.χ. το email χρησιμοποιείται ήδη)
+          
+  /auth/login:
+    post:
+      tags:
+        - Users
+      summary: Σύνδεση εγγεγραμμένου χρήστη
+      parameters:
+        - in: query
+          name: email
+          required: true
+          example: test@gmail.com
+          schema:
+            type: string
+        - in: query
+          name: password
+          required: true
+          example: 123456
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK, όταν ο χρήστης συνδέεται επιτυχώς
+        '400':
+          description: >-
+            Bad Request, όταν δεν έχουν συμπληρωθεί σωστά τα πεδία email και
+            password ή δεν αντιστοιχούν σε κάποιο χρήστη
+  /auth/logout:
+    get:
+      tags:
+        - Users
+      summary: Αποσύνδεση χρήστη
+      parameters:
+        - in: query
+          name: email
+          required: true
+          example: test@gmail.com
+          schema:
+            type: string
+        - in: query
+          name: password
+          required: true
+          example: 123456
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK, όταν ο χρήστης αποσυνδέεται επιτυχώς
+        '400':
+          description: Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος
+  /todos:
+    get:
+      tags:
+        - Todo
+      summary: Λίστες todo
+      responses:
+        '200':
+          description: OK, και επιστρέφονται οι λίστες todo του χρήστη
+        '400':
+          description: Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος
+    post:
+      tags:
+        - Todo
+      summary: Δημιουργία λίστας todo
+      parameters:
+        - in: query
+          name: name
+          required: true
+          example: Super Market Items
+          schema:
+            type: string
+        - in: query
+          name: description
+          required: true
+          example: When you go to the super market do not forget the following.
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Created, όταν η λίστα καταχωρείται επιτυχώς
+        '400':
+          description: >-
+            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή οταν τα
+            πεδία name και description δεν έχουν οριστεί σωστά
+        '422':
+          description: >-
+            Unprocessable Entity, όταν αντιμετοπίζεται κάποιο σφάλμα στα πεδία
+            name και description
+  /todos/{id}:
+    get:
+      tags:
+        - Todo
+      summary: Ανάκτηση όλων των δεδομένων μίας λίστας todo με βάση το id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Μοναδικός αριθμός Id της λίστας
+      responses:
+        '200':
+          description: OK, και επιστρέφονται οι λίστες todo του χρήστη
+        '400':
+          description: >-
+            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
+            πεδίο {id} δεν αντιστοιχεί σε λίστα todo <br>ή η λίστα ανοίκει σε
+            άλλο χρήστη
+    put:
+      tags:
+        - Todo
+      summary: Ενημέρωση λίστας todo
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Μοναδικός αριθμός Id της λίστας
+        - in: query
+          name: name
+          required: true
+          example: Super Market Items
+          schema:
+            type: string
+        - in: query
+          name: description
+          required: true
+          example: When you go to the super market do not forget the following.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ΟΚ, όταν η λίστα ενημερώνεται επιτυχώς
+        '400':
+          description: >-
+            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
+            πεδίο {id} δεν αντιστοιχεί σε λίστα todo <br>ή η λίστα ανοίκει σε
+            άλλο χρήστη
+        '422':
+          description: >-
+            Unprocessable Entity, όταν αντιμετοπίζεται κάποιο σφάλμα στα πεδία
+            name και description
+    delete:
+      tags:
+        - Todo
+      summary: Διαγραφή μίας λίστας todo και των items της με βάση το id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Μοναδικός αριθμός Id της λίστας
+      responses:
+        '200':
+          description: OK, όταν η λίστα και τα items διαγράφονται επιτυχώς
+        '400':
+          description: >-
+            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
+            πεδίο {id} δεν αντιστοιχεί σε λίστα todo <br>ή η λίστα ανοίκει σε
+            άλλο χρήστη
+        '422':
+          description: >-
+            Unprocessable Entity, όταν αντιμετοπίζεται κάποιο σφάλμα στα πεδία
+            της λίστας
+  /todos/{id}/items:
+    get:
+      tags:
+        - Todo Items
+      summary: Ανάκτηση όλων των δεδομένων ενός item με βάση το id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Μοναδικός αριθμός Id του item
+      responses:
+        '200':
+          description: OK, και επιστρέφονται τα δεδομένα του item
+        '400':
+          description: >-
+            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
+            πεδίο {id} δεν αντιστοιχεί σε todo item <br>ή το item ανοίκει σε
+            άλλο χρήστη
+    post:
+      tags:
+        - Todo Items
+      summary: Δημιουργία ενός todo item
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Μοναδικός αριθμός Id της λιστας todo
+        - in: query
+          name: text
+          required: true
+          example: Coca Cola
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Created, όταν δημιουργείται επιτυχώς το item
+        '400':
+          description: >-
+            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
+            πεδίο {id} δεν αντιστοιχεί σε todo item <br>ή η λίστα ανοίκει σε
+            άλλο χρήστη <br>ή το πεδίο text δεν είναι σωστό
+    put:
+      tags:
+        - Todo Items
+      summary: Ενημέρωση ενός item με βάση το id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Μοναδικός αριθμός Id του item
+      responses:
+        '200':
+          description: OK, όταν το item ενημερώνεται επιτυχώς
+        '400':
+          description: >-
+            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
+            πεδίο {id} δεν αντιστοιχεί σε todo item <br>ή το item ανοίκει σε
+            άλλο χρήστη
+    delete:
+      tags:
+        - Todo Items
+      summary: Διαγραφή ενός item με βάση το id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Μοναδικός αριθμός Id του item
+      responses:
+        '200':
+          description: OK, όταν το item διαγράφεται επιτυχώς
+        '400':
+          description: >-
+            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
+            πεδίο {id} δεν αντιστοιχεί σε todo item <br>ή το item ανοίκει σε
+            άλλο χρήστη
+      
+      
+      
+      
+      
+      
+      
+
+      
+
+          
