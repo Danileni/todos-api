@@ -1,5 +1,6 @@
 # README
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://list-of-todo-items-api.herokuapp.com/)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://list-of-todo-items-api.herokuapp.com/)<br />
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
