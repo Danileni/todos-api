@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :authorize_request, only: :create
+  skip_before_action :authorize_request, only: [:create, :logout]
   # POST /signup
   # return authenticated token upon signup
   def create
@@ -9,7 +9,16 @@ class UsersController < ApplicationController
     json_response(response, :created)
   end
 
+  def logout
+    auth_token = AuthenticateUser.new(auth_params[:email], auth_params[:password]).call
+    json_response(message: "You have successfully logged out")
+  end
+
   private
+
+  def auth_params
+    params.permit(:email, :password)
+  end
 
   def user_params
     params.permit(
