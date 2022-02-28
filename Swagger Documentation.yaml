@@ -44,24 +44,21 @@ paths :
           schema:
             type: string
           required: true
-          example: test@email.com
+          
         - in: query
           name: password
           required: true
-          example: 123456
+          
           schema:
             type: string
       responses:
         '201':
-          description: Επιτυχής εγγραφή του χρήστη
+          description: >-
+            Created, Επιτυχής εγγραφή του χρήστη
           
         '400':
           description: >-
-            Δεν έχουν συμπληρώθει όλα τα πεδία 
-          
-        '422':
-          description: >-
-            Εντοπισμός σφάλματος στην εισαγωγή του Email ή / και του κωδικού
+           Bad Request, Εντοπισμός σφάλματος στην εισαγωγή του Email ή / και του κωδικού
           
   /auth/login:
     post:
@@ -72,45 +69,45 @@ paths :
         - in: query
           name: email
           required: true
-          example: test@gmail.com
           schema:
             type: string
         - in: query
           name: password
           required: true
-          example: 123456
           schema:
             type: string
       responses:
         '200':
-          description: OK, όταν ο χρήστης συνδέεται επιτυχώς
+          description: >-
+            OK , Επιτυχής Σύνδεση του χρήστη
         '400':
           description: >-
-            Bad Request, όταν δεν έχουν συμπληρωθεί σωστά τα πεδία email και
-            password ή δεν αντιστοιχούν σε κάποιο χρήστη
+            Bad Request , Δεν έχουν συμπληρώθει όλα τα πεδία 
   /auth/logout:
     get:
       tags:
         - Users
-      summary: Αποσύνδεση χρήστη
+      summary: Αποσύνδεση του χρήστη
       parameters:
         - in: query
           name: email
           required: true
-          example: test@gmail.com
+          example: foo@bar.com
           schema:
             type: string
         - in: query
           name: password
           required: true
-          example: 123456
+          example: foobar
           schema:
             type: string
       responses:
         '200':
-          description: OK, όταν ο χρήστης αποσυνδέεται επιτυχώς
+          description: >-
+             OK , Ο χρήστης αποσυνδέθηκε επιτυχώς
         '400':
-          description: Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος
+          description: >- 
+             Bad Request , Ο χρήστης δεν είναι συνδεδεμένος όποτε δεν μπορέι να κάνει logout
   /todos:
     get:
       tags:
@@ -118,9 +115,11 @@ paths :
       summary: Λίστες todo
       responses:
         '200':
-          description: OK, και επιστρέφονται οι λίστες todo του χρήστη
+          description: >-
+           OK, επιστρέφονται ολες οι λίστες todo του συνδεδεμένου χρήστη
         '400':
-          description: Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος
+          description: >-
+           Bad Request, ο χρήστης δεν έχει συνδεθεί
     post:
       tags:
         - Todo
@@ -129,26 +128,28 @@ paths :
         - in: query
           name: name
           required: true
-          example: Super Market Items
+          example: Exams Semester
           schema:
             type: string
         - in: query
           name: description
           required: true
-          example: When you go to the super market do not forget the following.
+          example: All the classes you need to take
           schema:
             type: string
       responses:
+      
         '201':
-          description: Created, όταν η λίστα καταχωρείται επιτυχώς
+          description: >-
+            Created, όταν η λίστα καταχωρείται επιτυχως
         '400':
           description: >-
-            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή οταν τα
-            πεδία name και description δεν έχουν οριστεί σωστά
+            Bad Request, ο χρήστης δεν είναι συνδεδεμένος ή τα name και description πέδια δεν έχουν οριστεί σωστά
         '422':
           description: >-
-            Unprocessable Entity, όταν αντιμετοπίζεται κάποιο σφάλμα στα πεδία
+            Unprocessable Entity, αντιμετωπίστηκε κάποιο σημασιολογικό σφάλμα στα πεδία
             name και description
+            
   /todos/{id}:
     get:
       tags:
@@ -163,12 +164,17 @@ paths :
           description: Μοναδικός αριθμός Id της λίστας
       responses:
         '200':
-          description: OK, και επιστρέφονται οι λίστες todo του χρήστη
+          description: >-
+            OK, και επιστρέφονται οι λίστες todo του χρήστη
         '400':
           description: >-
-            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
-            πεδίο {id} δεν αντιστοιχεί σε λίστα todo <br>ή η λίστα ανοίκει σε
-            άλλο χρήστη
+            Bad Request, ο χρήστης δεν είναι συνδεδεμένος όταν το
+            πεδίο {id} δεν αντιστοιχεί σε λίστα todo
+        '404': 
+          description: >-
+            Not found, Δεν βρέθηκε καποια λίστα με το συγκεκριμένο {id}
+            
+          
     put:
       tags:
         - Todo
@@ -179,53 +185,55 @@ paths :
           schema:
             type: integer
           required: true
-          description: Μοναδικός αριθμός Id της λίστας
+          description: ID της λίστας todo
         - in: query
           name: name
           required: true
-          example: Super Market Items
+          example: Exams Semester
           schema:
             type: string
         - in: query
           name: description
           required: true
-          example: When you go to the super market do not forget the following.
+          example: All the classes you need to take
           schema:
             type: string
       responses:
         '200':
-          description: ΟΚ, όταν η λίστα ενημερώνεται επιτυχώς
+          description: >-
+            ΟΚ, Η λίστα ενημερώθηκε επιτυχώς
         '400':
           description: >-
-            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
+            Bad Request, ο χρήστης δεν έχει συνδεθεί <br>ή όταν το
             πεδίο {id} δεν αντιστοιχεί σε λίστα todo <br>ή η λίστα ανοίκει σε
             άλλο χρήστη
         '422':
           description: >-
-            Unprocessable Entity, όταν αντιμετοπίζεται κάποιο σφάλμα στα πεδία
+            Unprocessable Entity, αντιμετωπίσθηκε κάποιο σημασιολογικό σφάλμα στα πεδία
             name και description
     delete:
       tags:
         - Todo
-      summary: Διαγραφή μίας λίστας todo και των items της με βάση το id
+      summary: Διαγραφή λίστας todo και περιοχομένων της με βάση το id της
       parameters:
         - in: path
           name: id
           schema:
             type: integer
           required: true
-          description: Μοναδικός αριθμός Id της λίστας
+          description:  ID της λίστας
       responses:
         '200':
-          description: OK, όταν η λίστα και τα items διαγράφονται επιτυχώς
+          description: >- 
+            OK, όταν η λίστα και τα items διαγράφονται επιτυχώς
         '400':
           description: >-
-            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
-            πεδίο {id} δεν αντιστοιχεί σε λίστα todo <br>ή η λίστα ανοίκει σε
+            Bad Request, ο χρήστης δεν έχει συνδεθεί ή όταν το
+            πεδίο {id} ή η λίστα ανοίκει σε
             άλλο χρήστη
         '422':
           description: >-
-            Unprocessable Entity, όταν αντιμετοπίζεται κάποιο σφάλμα στα πεδία
+            Unprocessable Entity, αντιμετωπίσθηκε κάποιο σημασιολογικό σφάλμα στα πεδία
             της λίστας
   /todos/{id}/items:
     get:
@@ -241,12 +249,11 @@ paths :
           description: Μοναδικός αριθμός Id του item
       responses:
         '200':
-          description: OK, και επιστρέφονται τα δεδομένα του item
-        '400':
           description: >-
-            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
-            πεδίο {id} δεν αντιστοιχεί σε todo item <br>ή το item ανοίκει σε
-            άλλο χρήστη
+            OK, Βρέθηκε το item και το επιστρέφει
+        '404':
+          description: >-
+            Not found, Δεν βρέθηκε καποιο αντικείμενο με το συγκεκριμένο {id} λίστας
     post:
       tags:
         - Todo Items
@@ -257,44 +264,46 @@ paths :
           schema:
             type: integer
           required: true
-          description: Μοναδικός αριθμός Id της λιστας todo
+          description: Αριθμός Id της λίστας
         - in: query
           name: text
           required: true
-          example: Coca Cola
+          example: Algorithms
           schema:
             type: string
       responses:
         '201':
-          description: Created, όταν δημιουργείται επιτυχώς το item
-        '400':
           description: >-
-            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
-            πεδίο {id} δεν αντιστοιχεί σε todo item <br>ή η λίστα ανοίκει σε
-            άλλο χρήστη <br>ή το πεδίο text δεν είναι σωστό
+            Created, Δημιουργήθηκε επιτυχώς το item
+        '422':
+          description: >-
+            Unprocessable Entity, αντιμετωπίσθηκε κάποιο σημασιολογικό σφάλμα στα πεδίο
+            name , πιθανόν να είναι κενό
     put:
       tags:
         - Todo Items
-      summary: Ενημέρωση ενός item με βάση το id
+      summary: Ενημέρωση Item με βάση το id της λίστας
       parameters:
         - in: path
           name: id
           schema:
             type: integer
           required: true
-          description: Μοναδικός αριθμός Id του item
+          description: Item id
       responses:
         '200':
-          description: OK, όταν το item ενημερώνεται επιτυχώς
+          description: >-
+            OK, το item ενημερώθηκε επιτυχώς
         '400':
           description: >-
-            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
-            πεδίο {id} δεν αντιστοιχεί σε todo item <br>ή το item ανοίκει σε
-            άλλο χρήστη
+            Bad Request, ο χρήστης δεν έχει συνδεθεί 
+        '404':
+          description: >-
+            Το item δεν υπάρχει
     delete:
       tags:
         - Todo Items
-      summary: Διαγραφή ενός item με βάση το id
+      summary: Διαγραφή του item απο την λιστα
       parameters:
         - in: path
           name: id
@@ -303,13 +312,12 @@ paths :
           required: true
           description: Μοναδικός αριθμός Id του item
       responses:
-        '200':
-          description: OK, όταν το item διαγράφεται επιτυχώς
+        '204':
+          description: >-
+            OK , το item διαγράφηκε επιτυχώς
         '400':
           description: >-
-            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος <br>ή όταν το
-            πεδίο {id} δεν αντιστοιχεί σε todo item <br>ή το item ανοίκει σε
-            άλλο χρήστη
+            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος ή το item δεν υπήρχε
       
       
       

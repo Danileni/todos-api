@@ -109,8 +109,8 @@ RSpec.describe 'Todos API', type: :request do
   describe 'DELETE /todos/:id' do
     before { delete "/todos/#{todo_id}", params: {}, headers: headers }
 
-    it 'returns status code 204' do
-      expect(response).to have_http_status(204)
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
     end
   end
 end
