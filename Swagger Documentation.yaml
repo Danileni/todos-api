@@ -37,15 +37,14 @@ paths :
         - Users
       summary: Εγγραφή νέου χρήστη
       description: >-
-        Για την διαχείρηση των κωδικών του χρήστη χρησιμοποιήθηκε το gem bcrypt
-        και το has_secure_password στο μοντέλο του χρήστη.
+        Εγγραφη νεου χρήστη με το Email και εναν κωδικο της επιλογης του. 
       parameters:
         - in: query
           name: email
           schema:
             type: string
           required: true
-          example: test@gmail.com
+          example: test@email.com
         - in: query
           name: password
           required: true
@@ -54,17 +53,15 @@ paths :
             type: string
       responses:
         '201':
-          description: Created, όταν ο χρήστης εγγράφεται επιτυχώς
+          description: Επιτυχής εγγραφή του χρήστη
           
         '400':
           description: >-
-            Bad Request, όταν δεν έχουν συμπληρωθεί σωστά τα πεδία email και
-            password
+            Δεν έχουν συμπληρώθει όλα τα πεδία 
           
         '422':
           description: >-
-            Unprocessable Entity, όταν αντιμετοπίζεται κάποιο σφάλμα στα πεδία
-            email και password (π.χ. το email χρησιμοποιείται ήδη)
+            Εντοπισμός σφάλματος στην εισαγωγή του Email ή / και του κωδικού
           
   /auth/login:
     post:
