@@ -1,392 +1,330 @@
-{
-  "openapi": "3.0.0",
-  "servers": [
-    {
-      "url": "https://list-of-todo-items-api.herokuapp.com/",
-      "description": "Production server"
-    }
-  ],
-  "info": {
-    "title": "Ruby on Rails API",
-    "version": "1.0.0",
-    "description": " Το συγκεκριμένο API δημιουργήθηκε στα πλαίσια του μαθηματος Υπερσιοστρεφές λογισμικό (Software as a Service)  <br /><br />\nΟμαδα :<br/><br/>\nΕλένη Πολυκράτη Π18212 <br/><br/>\nΝικολαος Μυττάς Π18114 <br />\n\nΣχετικα με την Εργασία:\nΓια την υλοποιήση του συγκεκριμένου RESTful API χρησιμοποιήθηκεωσ framework η Rails (v7.0.2.2). Για βάση δεδομένων η PostgreSQL (v14.1). Για το Test Driven Development αξιοποιειται το Rspec , ένα Unit Test Framework της γλώσσας Ruby. Ο κώδικας για την εφαρμογή υπάρχει στο Github στο εξης Repository κ :<br/><br/>\n[https://github.com/Danileni/todos-api](https://github.com/Danileni/todos-api)\n<br/><br/>\nΤο deployment έχει γίνει στο Heroku :\n<br/><br/>\n[https://list-of-todo-items-api.herokuapp.com/](https://list-of-todo-items-api.herokuapp.com/) "
-  },
-  "paths": {
-    "/signup": {
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Εγγραφή νέου χρήστη",
-        "description": "Εγγραφη νεου χρήστη με το Email και εναν κωδικο της επιλογης του. ",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "email",
-            "schema": {
-              "type": "string"
-            },
-            "required": true
-          },
-          {
-            "in": "query",
-            "name": "password",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created, Επιτυχής εγγραφή του χρήστη"
-          },
-          "400": {
-            "description": "Bad Request, Εντοπισμός σφάλματος στην εισαγωγή του Email ή / και του κωδικού"
-          }
-        }
-      }
-    },
-    "/auth/login": {
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Σύνδεση εγγεγραμμένου χρήστη",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "email",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "password",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK , Επιτυχής Σύνδεση του χρήστη"
-          },
-          "400": {
-            "description": "Bad Request , Δεν έχουν συμπληρώθει όλα τα πεδία "
-          }
-        }
-      }
-    },
-    "/auth/logout": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Αποσύνδεση του χρήστη",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "email",
-            "required": true,
-            "example": "foo@bar.com",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "password",
-            "required": true,
-            "example": "foobar",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK , Ο χρήστης αποσυνδέθηκε επιτυχώς"
-          },
-          "400": {
-            "description": "Bad Request , Ο χρήστης δεν είναι συνδεδεμένος όποτε δεν μπορέι να κάνει logout"
-          }
-        }
-      }
-    },
-    "/todos": {
-      "get": {
-        "tags": [
-          "Todo"
-        ],
-        "summary": "Λίστες todo",
-        "responses": {
-          "200": {
-            "description": "OK, επιστρέφονται ολες οι λίστες todo του συνδεδεμένου χρήστη"
-          },
-          "400": {
-            "description": "Bad Request, ο χρήστης δεν έχει συνδεθεί"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Todo"
-        ],
-        "summary": "Δημιουργία λίστας todo",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "name",
-            "required": true,
-            "example": "Exams Semester",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "description",
-            "required": true,
-            "example": "All the classes you need to take",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created, όταν η λίστα καταχωρείται επιτυχως"
-          },
-          "400": {
-            "description": "Bad Request, ο χρήστης δεν είναι συνδεδεμένος ή τα name και description πέδια δεν έχουν οριστεί σωστά"
-          },
-          "422": {
-            "description": "Unprocessable Entity, αντιμετωπίστηκε κάποιο σημασιολογικό σφάλμα στα πεδία name και description"
-          }
-        }
-      }
-    },
-    "/todos/{id}": {
-      "get": {
-        "tags": [
-          "Todo"
-        ],
-        "summary": "Ανάκτηση όλων των δεδομένων μίας λίστας todo με βάση το id",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true,
-            "description": "Μοναδικός αριθμός Id της λίστας"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK, και επιστρέφονται οι λίστες todo του χρήστη"
-          },
-          "400": {
-            "description": "Bad Request, ο χρήστης δεν είναι συνδεδεμένος όταν το πεδίο {id} δεν αντιστοιχεί σε λίστα todo"
-          },
-          "404": {
-            "description": "Not found, Δεν βρέθηκε καποια λίστα με το συγκεκριμένο {id}"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Todo"
-        ],
-        "summary": "Ενημέρωση λίστας todo",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true,
-            "description": "ID της λίστας todo"
-          },
-          {
-            "in": "query",
-            "name": "name",
-            "required": true,
-            "example": "Exams Semester",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "description",
-            "required": true,
-            "example": "All the classes you need to take",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "ΟΚ, Η λίστα ενημερώθηκε επιτυχώς"
-          },
-          "400": {
-            "description": "Bad Request, ο χρήστης δεν έχει συνδεθεί <br>ή όταν το πεδίο {id} δεν αντιστοιχεί σε λίστα todo <br>ή η λίστα ανοίκει σε άλλο χρήστη"
-          },
-          "422": {
-            "description": "Unprocessable Entity, αντιμετωπίσθηκε κάποιο σημασιολογικό σφάλμα στα πεδία name και description"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Todo"
-        ],
-        "summary": "Διαγραφή λίστας todo και περιοχομένων της με βάση το id της",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true,
-            "description": "ID της λίστας"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK, όταν η λίστα και τα items διαγράφονται επιτυχώς"
-          },
-          "400": {
-            "description": "Bad Request, ο χρήστης δεν έχει συνδεθεί ή όταν το πεδίο {id} ή η λίστα ανοίκει σε άλλο χρήστη"
-          },
-          "422": {
-            "description": "Unprocessable Entity, αντιμετωπίσθηκε κάποιο σημασιολογικό σφάλμα στα πεδία της λίστας"
-          }
-        }
-      }
-    },
-    "/todos/{id}/items": {
-      "get": {
-        "tags": [
-          "Todo Items"
-        ],
-        "summary": "Ανάκτηση όλων των δεδομένων ενός item με βάση το id",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true,
-            "description": "Μοναδικός αριθμός Id του item"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK, Βρέθηκε το item και το επιστρέφει"
-          },
-          "404": {
-            "description": "Not found, Δεν βρέθηκε καποιο αντικείμενο με το συγκεκριμένο {id} λίστας"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Todo Items"
-        ],
-        "summary": "Δημιουργία ενός todo item",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true,
-            "description": "Αριθμός Id της λίστας"
-          },
-          {
-            "in": "query",
-            "name": "text",
-            "required": true,
-            "example": "Algorithms",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created, Δημιουργήθηκε επιτυχώς το item"
-          },
-          "422": {
-            "description": "Unprocessable Entity, αντιμετωπίσθηκε κάποιο σημασιολογικό σφάλμα στα πεδίο name , πιθανόν να είναι κενό"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Todo Items"
-        ],
-        "summary": "Ενημέρωση Item με βάση το id της λίστας",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true,
-            "description": "Item id"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK, το item ενημερώθηκε επιτυχώς"
-          },
-          "400": {
-            "description": "Bad Request, ο χρήστης δεν έχει συνδεθεί "
-          },
-          "404": {
-            "description": "Το item δεν υπάρχει"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Todo Items"
-        ],
-        "summary": "Διαγραφή του item απο την λιστα",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true,
-            "description": "Μοναδικός αριθμός Id του item"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "OK , το item διαγράφηκε επιτυχώς"
-          },
-          "400": {
-            "description": "Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος ή το item δεν υπήρχε"
-          }
-        }
-      }
-    }
-  }
-}
+openapi : "3.0.0"
+servers:
+  - url: https://list-of-todo-items-api.herokuapp.com/ 
+    description: Production server 
+info :
+      title: "Ruby on Rails API"
+      version : "1.0.0"
+      description : " Το συγκεκριμένο API δημιουργήθηκε στα πλαίσια του μαθηματος Υπερσιοστρεφές λογισμικό (Software as a Service) 
+        <br /><br />
+      
+        Ομαδα :<br/><br/>
+        
+          Ελένη Πολυκράτη Π18212 <br/><br/>
+          
+          Νικολαος Μυττάς Π18114 <br />
+      
+          
+          Σχετικα με την Εργασία:
+          
+          Για την υλοποιήση του συγκεκριμένου RESTful API χρησιμοποιήθηκεωσ framework η Rails (v7.0.2.2). Για βάση δεδομένων η PostgreSQL (v14.1). Για το Test Driven Development αξιοποιειται το Rspec , ένα Unit Test Framework της γλώσσας Ruby. Ο κώδικας για την εφαρμογή υπάρχει στο Github στο εξης Repository κ :<br/><br/>
+          
+          [https://github.com/Danileni/todos-api](https://github.com/Danileni/todos-api)
+          
+          <br/><br/>
+          
+          Το deployment έχει γίνει στο Heroku :
+          
+          <br/><br/>
+          
+          [https://list-of-todo-items-api.herokuapp.com/](https://list-of-todo-items-api.herokuapp.com/)
+      "
+      
+paths :
+  /signup:
+    post:
+      tags:
+        - Users
+      summary: Εγγραφή νέου χρήστη
+      description: >-
+        Εγγραφη νεου χρήστη με το Email και εναν κωδικο της επιλογης του. 
+      parameters:
+        - in: query
+          name: email
+          schema:
+            type: string
+          required: true
+          
+        - in: query
+          name: password
+          required: true
+          
+          schema:
+            type: string
+      responses:
+        '201':
+          description: >-
+            Created, Επιτυχής εγγραφή του χρήστη
+          
+        '400':
+          description: >-
+           Bad Request, Εντοπισμός σφάλματος στην εισαγωγή του Email ή / και του κωδικού
+          
+  /auth/login:
+    post:
+      tags:
+        - Users
+      summary: Σύνδεση εγγεγραμμένου χρήστη
+      parameters:
+        - in: query
+          name: email
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: password
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+            OK , Επιτυχής Σύνδεση του χρήστη
+        '400':
+          description: >-
+            Bad Request , Δεν έχουν συμπληρώθει όλα τα πεδία 
+  /auth/logout:
+    get:
+      tags:
+        - Users
+      summary: Αποσύνδεση του χρήστη
+      parameters:
+        - in: query
+          name: email
+          required: true
+          example: foo@bar.com
+          schema:
+            type: string
+        - in: query
+          name: password
+          required: true
+          example: foobar
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+             OK , Ο χρήστης αποσυνδέθηκε επιτυχώς
+        '400':
+          description: >- 
+             Bad Request , Ο χρήστης δεν είναι συνδεδεμένος όποτε δεν μπορέι να κάνει logout
+  /todos:
+    get:
+      tags:
+        - Todo
+      summary: Λίστες todo
+      responses:
+        '200':
+          description: >-
+           OK, επιστρέφονται ολες οι λίστες todo του συνδεδεμένου χρήστη
+        '400':
+          description: >-
+           Bad Request, ο χρήστης δεν έχει συνδεθεί
+    post:
+      tags:
+        - Todo
+      summary: Δημιουργία λίστας todo
+      parameters:
+        - in: query
+          name: name
+          required: true
+          example: Exams Semester
+          schema:
+            type: string
+        - in: query
+          name: description
+          required: true
+          example: All the classes you need to take
+          schema:
+            type: string
+      responses:
+      
+        '201':
+          description: >-
+            Created, όταν η λίστα καταχωρείται επιτυχως
+        '400':
+          description: >-
+            Bad Request, ο χρήστης δεν είναι συνδεδεμένος ή τα name και description πέδια δεν έχουν οριστεί σωστά
+        '422':
+          description: >-
+            Unprocessable Entity, αντιμετωπίστηκε κάποιο σημασιολογικό σφάλμα στα πεδία
+            name και description
+            
+  /todos/{id}:
+    get:
+      tags:
+        - Todo
+      summary: Ανάκτηση όλων των δεδομένων μίας λίστας todo με βάση το id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Μοναδικός αριθμός Id της λίστας
+      responses:
+        '200':
+          description: >-
+            OK, και επιστρέφονται οι λίστες todo του χρήστη
+        '400':
+          description: >-
+            Bad Request, ο χρήστης δεν είναι συνδεδεμένος όταν το
+            πεδίο {id} δεν αντιστοιχεί σε λίστα todo
+        '404': 
+          description: >-
+            Not found, Δεν βρέθηκε καποια λίστα με το συγκεκριμένο {id}
+            
+          
+    put:
+      tags:
+        - Todo
+      summary: Ενημέρωση λίστας todo
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID της λίστας todo
+        - in: query
+          name: name
+          required: true
+          example: Exams Semester
+          schema:
+            type: string
+        - in: query
+          name: description
+          required: true
+          example: All the classes you need to take
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >-
+            ΟΚ, Η λίστα ενημερώθηκε επιτυχώς
+        '400':
+          description: >-
+            Bad Request, ο χρήστης δεν έχει συνδεθεί ή όταν το
+            πεδίο {id} δεν αντιστοιχεί σε λίστα todo 
+        '422':
+          description: >-
+            Unprocessable Entity, αντιμετωπίσθηκε κάποιο σημασιολογικό σφάλμα στα πεδία
+            name και description
+    delete:
+      tags:
+        - Todo
+      summary: Διαγραφή λίστας todo και περιοχομένων της με βάση το id της
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description:  ID της λίστας
+      responses:
+        '200':
+          description: >- 
+            OK, όταν η λίστα και τα items διαγράφονται επιτυχώς
+        '400':
+          description: >-
+            Bad Request, ο χρήστης δεν έχει συνδεθεί ή όταν το
+            πεδίο {id} ή η λίστα ανοίκει σε
+            άλλο χρήστη
+        '422':
+          description: >-
+            Unprocessable Entity, αντιμετωπίσθηκε κάποιο σημασιολογικό σφάλμα στα πεδία
+            της λίστας
+  /todos/{id}/items:
+    get:
+      tags:
+        - Todo Items
+      summary: Ανάκτηση όλων των δεδομένων ενός item με βάση το id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Μοναδικός αριθμός Id του item
+      responses:
+        '200':
+          description: >-
+            OK, Βρέθηκε το item και το επιστρέφει
+        '404':
+          description: >-
+            Not found, Δεν βρέθηκε καποιο αντικείμενο με το συγκεκριμένο {id} λίστας
+    post:
+      tags:
+        - Todo Items
+      summary: Δημιουργία ενός todo item
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Αριθμός Id της λίστας
+        - in: query
+          name: text
+          required: true
+          example: Algorithms
+          schema:
+            type: string
+      responses:
+        '201':
+          description: >-
+            Created, Δημιουργήθηκε επιτυχώς το item
+        '422':
+          description: >-
+            Unprocessable Entity, αντιμετωπίσθηκε κάποιο σημασιολογικό σφάλμα στα πεδίο
+            name , πιθανόν να είναι κενό
+    put:
+      tags:
+        - Todo Items
+      summary: Ενημέρωση Item με βάση το id της λίστας
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Item id
+      responses:
+        '200':
+          description: >-
+            OK, το item ενημερώθηκε επιτυχώς
+        '400':
+          description: >-
+            Bad Request, ο χρήστης δεν έχει συνδεθεί 
+        '404':
+          description: >-
+            Το item δεν υπάρχει
+    delete:
+      tags:
+        - Todo Items
+      summary: Διαγραφή του item απο την λιστα
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Μοναδικός αριθμός Id του item
+      responses:
+        '204':
+          description: >-
+            OK , το item διαγράφηκε επιτυχώς
+        '400':
+          description: >-
+            Bad Request, όταν ο χρήστης δεν είναι συνδεδεμένος ή το item δεν υπήρχε
+      
+      
+      
+      
+      
+      
+      
+
+      
+
+          
